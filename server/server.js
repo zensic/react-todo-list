@@ -1,9 +1,10 @@
 const express = require('express');
+const cors = require('cors');
 const app = express();
-require('dotenv').config();
 
-//console.log(process.env);
-//const api_key = process.env.API_KEY;
+app.use(cors());
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 
 app.get('/', (req, res) => {
   console.log('Here');

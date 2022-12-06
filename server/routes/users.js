@@ -1,29 +1,43 @@
 const express = require('express');
+const firebase = require('../firebase');
 const router = express.Router();
+const auth = firebase.auth();
 
 // Router checks from top to bottom, code matched first will run
-router.get("/", (req, res) => {
-  res.send('User List');
+router.post("/create", async (req, res) => {
+  let email = req.body.email;
+  let password = req.body.password;
+  await auth.createUserWithEmailAndPassword(email, password)
+    .then((userCredential) => {
+      // Signed in 
+      res.send(userCredential.user);
+    })
+    .catch((error) => {
+      res.status(error.code).send(error.message);
+    });
 })
 
-router.post('/', (req, res) => {
-  res.send('Create User');
+router.post('/login', async (req, res) => {
+  let email = req.body.email;
+  let password = req.body.password;
+  await auth.signInWithEmailAndPassword(email, password)
+    .then((userCredential) => {
+      // Signed in
+      res.send(userCredential.user);
+    })
+    .catch((error) => {
+      res.status(error.code).send(error.message);
+    });
 })
 
-router.get("/new", (req, res) => {
-  res.send('User New Form')
-})
-
-router
-  .route('/:id')
-  .get((req, res) => {
-    res.send(`Get User With ID ${req.params.id}`);
-  })
-  .put((req, res) => {
-    res.send(`Update User With ID ${req.params.id}`);
-  })
-  .delete((req, res) => {
-    res.send(`Delete User With ID ${req.params.id}`);
+router.post('/logout', async (req, res) => {
+  await auth.signOut().then(() => {
+    // Sign-out successful.
+    res.send("success");
+  }).catch((error) => {
+    // An error happened.
+    res.status(error.code).send(error.message);
   });
+})
 
 module.exports = router;

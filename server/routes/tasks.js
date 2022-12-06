@@ -1,24 +1,28 @@
 const express = require('express');
+const firebase = require('../firebase');
 const router = express.Router();
+const firestore = firebase.firestore();
 
 // Router checks from top to bottom, code matched first will run
-router.get("/", (req, res) => {
+router.get("/", async (req, res) => {
   res.send('Task List');
 })
 
-router.post('/', (req, res) => {
-  res.send('Create Task');
-})
-
-router.get("/new", (req, res) => {
-  res.send('Task New Form')
+router.post('/', async (req, res) => {
+  try {
+    await firestore.collection('users').doc('firest').set({
+      name: "Los Angeles",
+      state: "CA",
+      country: "USA"
+    });
+    res.send('Record saved successfully');
+  } catch (error) {
+    res.status(400).send(error.message);
+  }
 })
 
 router
   .route('/:id')
-  .get((req, res) => {
-    res.send(`Get Task With ID ${req.params.id}`);
-  })
   .put((req, res) => {
     res.send(`Update Task With ID ${req.params.id}`);
   })
