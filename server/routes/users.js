@@ -10,10 +10,10 @@ router.post("/create", async (req, res) => {
   await auth.createUserWithEmailAndPassword(email, password)
     .then((userCredential) => {
       // Signed in 
-      res.send(userCredential.user);
+      res.status(201).send(userCredential.user);
     })
     .catch((error) => {
-      res.status(error.code).send(error.message);
+      res.status(400).send(error.message);
     });
 })
 
@@ -23,20 +23,20 @@ router.post('/login', async (req, res) => {
   await auth.signInWithEmailAndPassword(email, password)
     .then((userCredential) => {
       // Signed in
-      res.send(userCredential.user);
+      res.status(200).send(userCredential.user);
     })
     .catch((error) => {
-      res.status(error.code).send(error.message);
+      res.status(400).send(error.message);
     });
 })
 
 router.post('/logout', async (req, res) => {
   await auth.signOut().then(() => {
     // Sign-out successful.
-    res.send("success");
+    res.status(200).send("success");
   }).catch((error) => {
     // An error happened.
-    res.status(error.code).send(error.message);
+    res.status(400).send(error.message);
   });
 })
 
