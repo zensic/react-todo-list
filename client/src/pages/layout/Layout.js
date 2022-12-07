@@ -5,7 +5,7 @@ const Layout = () => {
   return (
     <div className="layout">
       <nav>
-        <Link to={`home`}>Home</Link>
+        <Link to={``}>Home</Link>
         <Link to={`login`}>Login</Link>
       </nav>
       <div id="detail"><Outlet /></div>

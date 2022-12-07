@@ -2,14 +2,15 @@ import React from 'react'
 
 const Login = () => {
   return (
-    <div className="login-con">
-      <h1>Login</h1>
-      <p>Username</p>
-      <input></input>
+    <div className="login">
+      <h1>Sign in</h1>
+      <img src="images/todolist.jpg" alt="Todolist" />
+      <p>Email</p>
+      <input type="email"></input>
       <p>Password</p>
-      <input></input>
-      <button>Login</button>
-      <button>Register</button>
+      <input type="password"></input>
+      <button className='button-primary'>Confirm</button>
+      <button className='button-secondary'>Register</button>
     </div>
   )
 }
