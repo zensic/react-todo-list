@@ -9,11 +9,11 @@ const signUp = async (aEmail, aPassword) => {
     password: aPassword
   })
     .then((result) => {
-      console.log(result);
+      // console.log(result);
       confirmed = true;
     })
     .catch((error) => {
-      console.log(error);
+      // console.log(error);
     })
 
   return confirmed;
@@ -26,13 +26,13 @@ const signIn = async (aEmail, aPassword) => {
     password: aPassword
   })
     .then((result) => {
-      console.log(result);
+      // console.log(result);
       confirmed = true;
     })
     .catch((error) => {
-      console.log(error);
+      // console.log(error);
     })
-  return confirmed;
+  return confirmed
 }
 
 export { signUp, signIn };

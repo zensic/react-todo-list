@@ -38,8 +38,25 @@ nav > a {
   text-decoration: none;
 }
 
+nav > a:first-child {
+  margin-right: 1rem;
+}
+
 nav > a:last-child {
   margin-left: auto;
+}
+
+nav > button {
+  font-size: 1rem;
+  font-weight: bold;
+  margin-left: auto;
+  color: var(--tertiary);
+  background-color: rgba(0, 0, 0, 0);
+  border: none;
+}
+
+nav > button:hover {
+  cursor: pointer;
 }
 
 #detail {

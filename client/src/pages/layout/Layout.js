@@ -11,7 +11,10 @@ const Layout = () => {
     <div className="layout">
       <nav>
         <Link to={``}>Home</Link>
-        <Link to={`login`}>Login</Link>
+        {auth
+          ? <><Link to={`dashboard`}>Dashboard</Link><button onClick={() => setAuth(false)}>Logout</button></>
+          : <Link to={`login`}>Login</Link>
+        }
       </nav>
       <AuthContext.Provider value={{ auth, setAuth, user, setUser }}>
         <div id="detail">
