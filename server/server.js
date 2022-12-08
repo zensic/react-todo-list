@@ -7,8 +7,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 app.get('/', (req, res) => {
-  console.log('Here');
-  res.send('Hi');
+  res.send('Dashboard App API');
 });
 
 const userRouter = require('./routes/users');
