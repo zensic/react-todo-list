@@ -10,7 +10,7 @@ router.post("/create", async (req, res) => {
   await auth.createUserWithEmailAndPassword(email, password)
     .then((userCredential) => {
       // Signed in 
-      res.status(201).send(userCredential.user);
+      res.status(201).send(`${userCredential.user.email} successfully registered!`);
     })
     .catch((error) => {
       res.status(400).send(error.message);
@@ -23,7 +23,7 @@ router.post('/login', async (req, res) => {
   await auth.signInWithEmailAndPassword(email, password)
     .then((userCredential) => {
       // Signed in
-      res.status(200).send(userCredential.user);
+      res.status(200).send(`${userCredential.user.email} successfully logged in!`);
     })
     .catch((error) => {
       res.status(400).send(error.message);
