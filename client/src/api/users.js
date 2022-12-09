@@ -3,36 +3,34 @@ import axios from "axios";
 const url = "http://localhost:3001/users/";
 
 const signUp = async (aEmail, aPassword) => {
-  let confirmed = false;
+  let user = null;
   await axios.post(`${url}create`, {
     email: aEmail,
     password: aPassword
   })
     .then((result) => {
-      // console.log(result);
-      confirmed = true;
+      user = result;
     })
     .catch((error) => {
-      // console.log(error);
+      console.log(error);
     })
 
-  return confirmed;
+  return user;
 }
 
 const signIn = async (aEmail, aPassword) => {
-  let confirmed = false;
+  let user = null;
   await axios.post(`${url}login`, {
     email: aEmail,
     password: aPassword
   })
     .then((result) => {
-      // console.log(result);
-      confirmed = true;
+      user = result;
     })
     .catch((error) => {
-      // console.log(error);
+      console.log(error);
     })
-  return confirmed
+  return user;
 }
 
 export { signUp, signIn };

@@ -1,5 +1,6 @@
 import React, { createContext, useState } from "react";
-import { Link, Outlet } from "react-router-dom";
+import { Link, Outlet, useNavigate } from "react-router-dom";
+import { handleLogout } from "./LayoutScript";
 
 const AuthContext = createContext();
 
@@ -7,12 +8,14 @@ const Layout = () => {
   const [auth, setAuth] = useState(false);
   const [user, setUser] = useState(null);
 
+  const navigate = useNavigate();
+
   return (
     <div className="layout">
       <nav>
         <Link to={``}>Home</Link>
         {auth
-          ? <><Link to={`dashboard`}>Dashboard</Link><button onClick={() => setAuth(false)}>Logout</button></>
+          ? <><Link to={`dashboard`}>Dashboard</Link><button onClick={() => handleLogout(setAuth, setUser, navigate)}>Logout</button></>
           : <Link to={`login`}>Login</Link>
         }
       </nav>

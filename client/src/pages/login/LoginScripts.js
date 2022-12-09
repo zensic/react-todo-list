@@ -1,25 +1,28 @@
 import { signIn, signUp } from "../../api/users";
 
 const handleConfirm = async (email, password, authObj, navigate) => {
-  let isConfirmed = await signIn(email, password);
-  if (isConfirmed) {
+  // user has uid, email
+  let user = await signIn(email, password);
+
+  if (user) {
     authObj.setAuth(true);
-    authObj.setUser(email);
+    authObj.setUser(user);
     navigate("/dashboard");
   }
   else {
-    alert("Invalid password or usename!");
+    alert("Invalid password or username!");
   }
 }
 
 const handleRegister = async (email, password, authObj, navigate) => {
-  let isRegistered = await signUp(email, password);
+  // user has uid, email
+  let user = await signUp(email, password);
 
-  if (isRegistered) {
+  if (user) {
     alert("Registered successfully!");
 
     authObj.setAuth(true);
-    authObj.setUser(email);
+    authObj.setUser(user);
     navigate("/dashboard");
   }
   else {
