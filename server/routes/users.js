@@ -2,13 +2,19 @@ const express = require('express');
 const firebase = require('../firebase');
 const router = express.Router();
 const auth = firebase.auth();
+const db = firebase.firestore();
 
 // Router checks from top to bottom, code matched first will run
 router.post("/create", async (req, res) => {
   let email = req.body.email;
   let password = req.body.password;
   await auth.createUserWithEmailAndPassword(email, password)
-    .then((userCredential) => {
+    .then(async (userCredential) => {
+      // Create user in FireStore, add email ref
+      await db.collection("users").doc(userCredential.user.uid).set({
+        email: email,
+      });
+
       // Signed in
       let user = { uid: userCredential.user.uid, email: userCredential.user.email };
       res.status(201).send(user);

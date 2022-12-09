@@ -6,7 +6,8 @@ const { v4: uuidv4 } = require('uuid');
 
 // Router checks from top to bottom, code matched first will run
 router.get("/", async (req, res) => {
-  await db.collection("tasks").get()
+  let uid = req.body.uid;
+  await db.collection("users").doc(uid).collection("tasks").get()
     .then((querySnapshot) => {
       let tasksTemp = [];
       querySnapshot.forEach((doc) => {
@@ -22,8 +23,9 @@ router.get("/", async (req, res) => {
 
 router.post('/', async (req, res) => {
   let id = uuidv4();
+  let uid = req.body.uid;
   let task = req.body.task;
-  await db.collection("tasks").doc(id).set({
+  await db.collection("users").doc(uid).collection("tasks").doc(id).set({
     name: task,
     checked: false
   })
@@ -39,8 +41,9 @@ router
   .route('/:id')
   .put(async (req, res) => {
     let id = req.params.id;
+    let uid = req.body.uid;
     let isChecked = req.body.checked;
-    let taskRef = db.collection("tasks").doc(id);
+    let taskRef = db.collection("users").doc(uid).collection("tasks").doc(id);
     await taskRef.update({
       checked: isChecked
     })
@@ -54,7 +57,8 @@ router
   })
   .delete(async (req, res) => {
     let id = req.params.id;
-    db.collection("tasks").doc(id).delete().then(() => {
+    let uid = req.body.uid;
+    db.collection("users").doc(uid).collection("tasks").doc(id).delete().then(() => {
       res.status(201).send("Document successfully deleted!");
     }).catch((error) => {
       res.status(400).send(error.message);
