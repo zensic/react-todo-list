@@ -1,12 +1,12 @@
 import React, { createContext, useState } from "react";
 import { Link, Outlet, useNavigate } from "react-router-dom";
-import { handleLogout } from "./LayoutScript";
+import { handleLogout } from "./LayoutScripts";
 
 const AuthContext = createContext();
 
 const Layout = () => {
   const [auth, setAuth] = useState(false);
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState([]);
 
   const navigate = useNavigate();
 

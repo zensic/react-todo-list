@@ -134,4 +134,61 @@ nav > button:hover {
   background-color: var(--tertiary);
   color: white;
 }
-/* Login styles start */
+/* Login styles end */
+
+/* Dashboard styles start */
+.dashboard {
+  display: flex;
+  flex-direction: column;
+}
+
+.dashboard > h2 {
+  color: var(--alt);
+}
+
+.dashboard-search {
+  padding: 0.5rem;
+  border: solid var(--alt) 1px;
+  border-radius: var(--radius);
+  color: var(--tertiary);
+  background-color: var(--secondary);
+}
+
+.task {
+  display: flex;
+  align-items: center;
+  padding: 0.5rem;
+  margin-bottom: 0.2rem;
+  border-radius: var(--radius);
+  color: var(--secondary);
+  background-color: var(--tertiary);
+}
+
+.task > span {
+  margin-right: auto;
+}
+
+.task > button {
+  color: white;
+  padding: 0.5rem;
+  margin-left: 0.5rem;
+  border: none;
+  border-radius: var(--radius);
+}
+
+.task-create {
+  padding: 0.5rem;
+  margin-bottom: 0.2rem;
+  border: none;
+  border-radius: var(--radius);
+  background-color: var(--primary);
+}
+
+.task-edit {
+  background-color: green;
+}
+
+.task-delete {
+  background-color: red;
+}
+/* Dashboard styles end */
