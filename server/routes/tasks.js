@@ -4,7 +4,7 @@ const router = express.Router();
 const db = firebase.firestore();
 const { v4: uuidv4 } = require('uuid');
 
-// Router checks from top to bottom, code matched first will run
+// Returns all tasks
 router.get("/", async (req, res) => {
   let uid = req.body.uid;
   await db.collection("users").doc(uid).collection("tasks").get()
@@ -21,6 +21,7 @@ router.get("/", async (req, res) => {
     });
 })
 
+// Creates a task
 router.post('/', async (req, res) => {
   let id = uuidv4();
   let uid = req.body.uid;
@@ -30,7 +31,7 @@ router.post('/', async (req, res) => {
     checked: false
   })
     .then(() => {
-      res.status(201).send("Document successfully written!");
+      res.status(201).send("Document successfully created!");
     })
     .catch((error) => {
       res.status(400).send(error.message);
@@ -40,6 +41,7 @@ router.post('/', async (req, res) => {
 router
   .route('/:id')
   .put(async (req, res) => {
+    // Checks a task
     let id = req.params.id;
     let uid = req.body.uid;
     let isChecked = req.body.checked;
@@ -56,6 +58,7 @@ router
       });
   })
   .delete(async (req, res) => {
+    // Deletes a task
     let id = req.params.id;
     let uid = req.body.uid;
     db.collection("users").doc(uid).collection("tasks").doc(id).delete().then(() => {

@@ -3,6 +3,8 @@
   --secondary: #d3ebfb;
   --tertiary: #42657a;
   --alt: #67737a;
+  --primaryComp: #faca87;
+  --secondaryComp: #ad7e3b;
   --radius: 6px;
 }
 
@@ -64,6 +66,13 @@ nav > button:hover {
   padding: 1rem;
 }
 /* Layout styles end*/
+
+/* Modal styles start */
+.modal {
+  position: absolute;
+  z-index: 99;
+}
+/* Modal styles end */
 
 /* Home styles start */
 .home {
@@ -164,16 +173,23 @@ nav > button:hover {
   background-color: var(--tertiary);
 }
 
+.task:hover {
+  cursor: pointer;
+}
+
 .task > span {
   margin-right: auto;
 }
 
 .task > button {
-  color: white;
   padding: 0.5rem;
   margin-left: 0.5rem;
   border: none;
   border-radius: var(--radius);
+}
+
+.task > button:hover {
+  cursor: pointer;
 }
 
 .task-create {
@@ -184,11 +200,17 @@ nav > button:hover {
   background-color: var(--primary);
 }
 
+.task-create:hover {
+  cursor: pointer;
+}
+
 .task-edit {
-  background-color: green;
+  color: var(--tertiary);
+  background-color: var(--secondary);
 }
 
 .task-delete {
-  background-color: red;
+  color: var(--secondaryComp);
+  background-color: var(--primaryComp);
 }
 /* Dashboard styles end */

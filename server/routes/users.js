@@ -4,7 +4,7 @@ const router = express.Router();
 const auth = firebase.auth();
 const db = firebase.firestore();
 
-// Router checks from top to bottom, code matched first will run
+// Creates a new user
 router.post("/create", async (req, res) => {
   let email = req.body.email;
   let password = req.body.password;
@@ -24,6 +24,7 @@ router.post("/create", async (req, res) => {
     });
 })
 
+// Check if user login details is correct
 router.post('/login', async (req, res) => {
   let email = req.body.email;
   let password = req.body.password;
