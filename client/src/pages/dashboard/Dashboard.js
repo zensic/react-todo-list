@@ -1,9 +1,7 @@
-import React, { useContext, useEffect, useState } from 'react'
-import { UserContext } from '../layout/Layout';
+import React, { useEffect, useState } from 'react'
 import { getDashboardData, handleCreate, handleDelete, handleUpdate, handleCheck } from './DashboardScripts';
 
 const Dashboard = () => {
-  const { user, setUser } = useContext(UserContext);
   const [tasks, setTasks] = useState([]);
 
   const reload = () => { getDashboardData(setTasks) };
@@ -11,7 +9,7 @@ const Dashboard = () => {
 
   return (
     <div className='dashboard'>
-      <p>Welcome {user?.email}!</p>
+      <p>Welcome {sessionStorage.getItem("email")}!</p>
       <input className='dashboard-search' placeholder='Search for task' />
       <h2>Tasks pending</h2>
       <button className='task-create' onClick={() => handleCreate(reload)}>Create a Task</button>

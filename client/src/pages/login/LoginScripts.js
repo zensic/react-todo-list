@@ -2,16 +2,15 @@ import axios from "axios";
 
 const url = "http://localhost:3001/users/";
 
-const handleConfirm = async (email, password, setUser, navigate) => {
+const handleConfirm = async (email, password, navigate) => {
   // user has uid, email
   await axios.post(`${url}login`, {
     email: email,
     password: password
   })
     .then((result) => {
-      setUser(result.data);
       sessionStorage.setItem("uid", result.data.uid);
-      
+      sessionStorage.setItem("email", result.data.email);
       navigate("/dashboard");
     })
     .catch((error) => {
@@ -20,7 +19,7 @@ const handleConfirm = async (email, password, setUser, navigate) => {
     })
 }
 
-const handleRegister = async (email, password, setUser, navigate) => {
+const handleRegister = async (email, password, navigate) => {
   // user has uid, email
   await axios.post(`${url}create`, {
     email: email,
@@ -28,8 +27,8 @@ const handleRegister = async (email, password, setUser, navigate) => {
   })
     .then((result) => {
       alert("Registered successfully!");
-
-      setUser(result.data);
+      sessionStorage.setItem("uid", result.data.uid);
+      sessionStorage.setItem("email", result.data.email);
       navigate("/dashboard");
     })
     .catch((error) => {

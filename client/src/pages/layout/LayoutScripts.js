@@ -1,6 +1,5 @@
-const handleLogout = (setAuth, setUser, navigate) => {
-  setAuth(false);
-  setUser(null)
+const handleLogout = (navigate) => {
+  sessionStorage.clear();
   navigate("/");
 }
 
