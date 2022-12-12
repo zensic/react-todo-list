@@ -3,11 +3,9 @@ import axios from "axios";
 const url = "http://localhost:3001/tasks/";
 
 const getDashboardData = async (setTasks) => {
-  console.log(sessionStorage.getItem("uid"));
+  let uid = sessionStorage.getItem("uid");
 
-  await axios.get(`${url}`, {
-    uid: sessionStorage.getItem("uid")
-  })
+  await axios.get(`${url}/${uid}`)
     .then((result) => {
       console.log(result.data);
 
@@ -18,7 +16,8 @@ const getDashboardData = async (setTasks) => {
     })
 }
 
-const handleCreate = async (uid) => {
+const handleCreate = async (reload) => {
+  let uid = sessionStorage.getItem("uid");
   let task = prompt("Enter your task", "Running a marathon");
 
   if (task) {
@@ -28,6 +27,7 @@ const handleCreate = async (uid) => {
     })
       .then((result) => {
         console.log(result);
+        reload();
 
         alert("Task created!")
       })
@@ -39,16 +39,68 @@ const handleCreate = async (uid) => {
   }
 }
 
-const handleUpdate = async () => {
+const handleUpdate = async (tid, name, reload) => {
+  let uid = sessionStorage.getItem("uid");
+  let update = prompt("Enter new task name", name);
 
+  if (update) {
+    await axios.patch(`${url}/update`, {
+      uid: uid,
+      id: tid,
+      task: name
+    })
+      .then((result) => {
+        console.log(result);
+        reload();
+
+        alert("Task changed!")
+      })
+      .catch((error) => {
+        console.log(error);
+
+        alert("Oops, something went wrong...")
+      })
+  }
 }
 
-const handleDelete = async () => {
 
+const handleCheck = async (tid, isChecked, reload) => {
+  let uid = sessionStorage.getItem("uid");
+
+  await axios.patch(`${url}/update`, {
+    uid: uid,
+    id: tid,
+    isChecked: isChecked
+  })
+    .then((result) => {
+      console.log(result);
+      reload();
+    })
+    .catch((error) => {
+      console.log(error);
+
+      alert("Oops, something went wrong...")
+    })
 }
 
-const handleCheck = async () => {
+const handleDelete = async (tid, reload) => {
+  let uid = sessionStorage.getItem("uid");
 
+  await axios.delete(`${url}/`, {
+    uid: uid,
+    id: tid
+  })
+    .then((result) => {
+      console.log(result);
+      reload();
+
+      alert("Task deleted!")
+    })
+    .catch((error) => {
+      console.log(error);
+
+      alert("Oops, something went wrong...")
+    })
 }
 
 export { getDashboardData, handleCreate, handleUpdate, handleDelete, handleCheck }

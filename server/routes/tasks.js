@@ -5,8 +5,8 @@ const db = firebase.firestore();
 const { v4: uuidv4 } = require('uuid');
 
 // Returns all tasks
-router.get("/", async (req, res) => {
-  let uid = req.body.uid;
+router.get("/:id", async (req, res) => {
+  let uid = req.params.id;
   await db.collection("users").doc(uid).collection("tasks").get()
     .then((querySnapshot) => {
       let tasksTemp = [];
@@ -38,9 +38,9 @@ router.post('/', async (req, res) => {
     });
 })
 
-// Checks a task
-router.patch(async (req, res) => {
-  let id = req.params.id;
+// Updates a task
+router.patch('/update', async (req, res) => {
+  let id = req.body.id;
   let uid = req.body.uid;
   let task = req.body.task;
   let taskRef = db.collection("users").doc(uid).collection("tasks").doc(id);
@@ -57,9 +57,9 @@ router.patch(async (req, res) => {
 })
 
 
-// Updates a task
-router.patch(async (req, res) => {
-  let id = req.params.id;
+// Checks a task
+router.patch('/check', async (req, res) => {
+  let id = req.body.id;
   let uid = req.body.uid;
   let isChecked = req.body.checked;
   let taskRef = db.collection("users").doc(uid).collection("tasks").doc(id);
@@ -76,9 +76,9 @@ router.patch(async (req, res) => {
 })
 
 // Deletes a task
-router.delete(async (req, res) => {
+router.delete('/', async (req, res) => {
   // Deletes a task
-  let id = req.params.id;
+  let id = req.body.id;
   let uid = req.body.uid;
   db.collection("users").doc(uid).collection("tasks").doc(id).delete().then(() => {
     res.status(201).send("Document successfully deleted!");
