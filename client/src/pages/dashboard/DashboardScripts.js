@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const url = "http://localhost:3001/tasks/";
+const url = "http://localhost:3001/tasks";
 
 // Loads task data into the state
 const getDashboardData = async (setTasks, setTaskCount) => {

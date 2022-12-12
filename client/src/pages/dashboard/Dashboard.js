@@ -21,16 +21,20 @@ const Dashboard = () => {
         .filter(task => {
           if (!task[1].checked) {
             if (search === "") {
-              return task;
+              return true;
             }
             else if (
               task[1].name
                 .toLowerCase()
                 .includes(search.toLowerCase())
             ) {
-              return task;
+              return true;
             }
+            else
+              return false;
           }
+          else
+            return false;
         })
         .map((task) =>
           <div className='task' onClick={() => { handleCheck(task[0], !task[1].checked, reload) }} key={task[0]}>
@@ -43,16 +47,20 @@ const Dashboard = () => {
         .filter(task => {
           if (task[1].checked) {
             if (search === "") {
-              return task;
+              return true;
             }
             else if (
               task[1].name
                 .toLowerCase()
                 .includes(search.toLowerCase())
             ) {
-              return task;
+              return true;
             }
+            else
+              return false;
           }
+          else
+            return false;
         })
         .map((task) =>
           <div className='task' onClick={() => { handleCheck(task[0], !task[1].checked, reload) }} key={task[0]}>
