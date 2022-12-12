@@ -155,6 +155,10 @@ nav > button:hover {
   color: var(--alt);
 }
 
+.dashboard > p {
+  color: var(--tertiary);
+}
+
 .dashboard-search {
   padding: 0.5rem;
   border: solid var(--alt) 1px;

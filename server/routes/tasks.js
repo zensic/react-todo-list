@@ -21,6 +21,18 @@ router.get("/:id", async (req, res) => {
     });
 })
 
+// Returns count of all tasks
+router.get("/dashboard/:id", async (req, res) => {
+  let uid = req.params.id;
+  await db.collection("users").doc(uid).collection("tasks").get()
+    .then((querySnapshot) => {
+      res.status(200).send(`${querySnapshot.size}`);
+    })
+    .catch((error) => {
+      res.status(400).send(error.message);
+    });
+})
+
 // Creates a task
 router.post('/', async (req, res) => {
   let uid = req.body.uid;

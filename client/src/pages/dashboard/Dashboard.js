@@ -4,13 +4,14 @@ import { getDashboardData, handleCreate, handleDelete, handleUpdate, handleCheck
 const Dashboard = () => {
   const [search, setSearch] = useState("");
   const [tasks, setTasks] = useState([]);
+  const [taskCount, setTaskCount] = useState(0);
 
-  const reload = () => { getDashboardData(setTasks) };
-  useEffect(() => { getDashboardData(setTasks) }, []);
+  const reload = () => { getDashboardData(setTasks, setTaskCount) };
+  useEffect(() => { getDashboardData(setTasks, setTaskCount) }, []);
 
   return (
     <div className='dashboard'>
-      <p>Welcome {sessionStorage.getItem("email")}!</p>
+      <p>Welcome {sessionStorage.getItem("email")}, you have {taskCount} tasks!</p>
       <input className='dashboard-search' placeholder='Search for task' onChange={(event) => {
         setSearch(event.target.value)
       }} />

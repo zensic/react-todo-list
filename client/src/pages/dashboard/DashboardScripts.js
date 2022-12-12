@@ -3,7 +3,7 @@ import axios from "axios";
 const url = "http://localhost:3001/tasks/";
 
 // Loads task data into the state
-const getDashboardData = async (setTasks) => {
+const getDashboardData = async (setTasks, setTaskCount) => {
   let uid = sessionStorage.getItem("uid");
 
   await axios.get(`${url}/${uid}`)
@@ -14,6 +14,15 @@ const getDashboardData = async (setTasks) => {
     .catch((error) => {
       // console.log(error);
     })
+  
+  await axios.get(`${url}/dashboard/${uid}`)
+  .then((result) => {
+    // console.log(result.data);
+    setTaskCount(result.data);
+  })
+  .catch((error) => {
+    // console.log(error);
+  })
 }
 
 // Creates a new task
