@@ -23,9 +23,10 @@ router.get("/:id", async (req, res) => {
 
 // Creates a task
 router.post('/', async (req, res) => {
-  let id = uuidv4();
   let uid = req.body.uid;
+  let id = uuidv4();
   let task = req.body.task;
+
   await db.collection("users").doc(uid).collection("tasks").doc(id).set({
     name: task,
     checked: false
@@ -39,12 +40,10 @@ router.post('/', async (req, res) => {
 })
 
 // Updates a task
-router.put('/update', async (req, res) => {
-  let id = req.body.id;
+router.patch('/update', async (req, res) => {
   let uid = req.body.uid;
+  let id = req.body.id;
   let task = req.body.task;
-
-  console.log(`${id} ${uid} ${task}`)
 
   let taskRef = db.collection("users").doc(uid).collection("tasks").doc(id);
   await taskRef.update({
@@ -61,10 +60,11 @@ router.put('/update', async (req, res) => {
 
 
 // Checks a task
-router.put('/check', async (req, res) => {
-  let id = req.body.id;
+router.patch('/check', async (req, res) => {
   let uid = req.body.uid;
+  let id = req.body.id;
   let isChecked = req.body.checked;
+
   let taskRef = db.collection("users").doc(uid).collection("tasks").doc(id);
   await taskRef.update({
     checked: isChecked
@@ -80,14 +80,19 @@ router.put('/check', async (req, res) => {
 
 // Deletes a task
 router.delete('/', async (req, res) => {
-  // Deletes a task
-  let id = req.body.id;
   let uid = req.body.uid;
-  db.collection("users").doc(uid).collection("tasks").doc(id).delete().then(() => {
-    res.status(201).send("Document successfully deleted!");
-  }).catch((error) => {
-    res.status(400).send(error.message);
-  });
+  let id = req.body.id;
+
+  console.log(`${uid} ${id}`)
+
+  let taskRef = db.collection("users").doc(uid).collection("tasks").doc(id);
+  await taskRef.delete()
+    .then(() => {
+      res.status(201).send("Task successfully deleted!");
+    })
+    .catch((error) => {
+      res.status(400).send(error.message);
+    });
 });
 
 module.exports = router;

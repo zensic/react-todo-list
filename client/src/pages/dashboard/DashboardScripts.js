@@ -44,7 +44,7 @@ const handleUpdate = async (tid, task, reload) => {
   let update = prompt("Enter new task name", task);
 
   if (update) {
-    await axios.put(`${url}/update`, {
+    await axios.patch(`${url}/update`, {
       uid: uid,
       id: tid,
       task: update
@@ -67,7 +67,7 @@ const handleUpdate = async (tid, task, reload) => {
 const handleCheck = async (tid, isChecked, reload) => {
   let uid = sessionStorage.getItem("uid");
 
-  await axios.put(`${url}/check`, {
+  await axios.patch(`${url}/check`, {
     uid: uid,
     id: tid,
     isChecked: isChecked
@@ -87,8 +87,10 @@ const handleDelete = async (tid, reload) => {
   let uid = sessionStorage.getItem("uid");
 
   await axios.delete(`${url}/`, {
-    uid: uid,
-    id: tid
+    data: {
+      uid: uid,
+      id: tid
+    }
   })
     .then((result) => {
       console.log(result);
