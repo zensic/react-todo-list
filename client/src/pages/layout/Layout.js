@@ -1,12 +1,12 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useMemo, useState } from "react";
 import { Link, Outlet, useNavigate } from "react-router-dom";
 import { handleLogout } from "./LayoutScripts";
 
-const AuthContext = createContext();
+const UserContext = createContext();
 
 const Layout = () => {
-  const [auth, setAuth] = useState(false);
-  const [user, setUser] = useState([]);
+  const [user, setUser] = useState(null);
+  const userProvider = useMemo(() => ({user, setUser}), [user, setUser]);
 
   const navigate = useNavigate();
 
@@ -14,19 +14,19 @@ const Layout = () => {
     <div className="layout">
       <nav>
         <Link to={``}>Home</Link>
-        {auth
-          ? <><Link to={`dashboard`}>Dashboard</Link><button onClick={() => handleLogout(setAuth, setUser, navigate)}>Logout</button></>
+        {user
+          ? <><Link to={`dashboard`}>Dashboard</Link><button onClick={() => handleLogout(setUser, setUser, navigate)}>Logout</button></>
           : <Link to={`login`}>Login</Link>
         }
       </nav>
-      <AuthContext.Provider value={{ auth, setAuth, user, setUser }}>
+      <UserContext.Provider value={userProvider}>
         <div id="detail">
           <Outlet />
         </div>
-      </AuthContext.Provider>
+      </UserContext.Provider>
     </div>
   );
 };
 
 export default Layout;
-export { AuthContext };
+export { UserContext };

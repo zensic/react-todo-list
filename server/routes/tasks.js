@@ -38,34 +38,53 @@ router.post('/', async (req, res) => {
     });
 })
 
-router
-  .route('/:id')
-  .put(async (req, res) => {
-    // Checks a task
-    let id = req.params.id;
-    let uid = req.body.uid;
-    let isChecked = req.body.checked;
-    let taskRef = db.collection("users").doc(uid).collection("tasks").doc(id);
-    await taskRef.update({
-      checked: isChecked
-    })
-      .then(() => {
-        res.status(201).send("Document successfully updated!");
-      })
-      .catch((error) => {
-        // The document probably doesn't exist.
-        res.status(400).send(error.message);
-      });
+// Checks a task
+router.patch(async (req, res) => {
+  let id = req.params.id;
+  let uid = req.body.uid;
+  let task = req.body.task;
+  let taskRef = db.collection("users").doc(uid).collection("tasks").doc(id);
+  await taskRef.update({
+    task: task
   })
-  .delete(async (req, res) => {
-    // Deletes a task
-    let id = req.params.id;
-    let uid = req.body.uid;
-    db.collection("users").doc(uid).collection("tasks").doc(id).delete().then(() => {
-      res.status(201).send("Document successfully deleted!");
-    }).catch((error) => {
+    .then(() => {
+      res.status(201).send("Task successfully updated!");
+    })
+    .catch((error) => {
+      // The document probably doesn't exist.
       res.status(400).send(error.message);
     });
+})
+
+
+// Updates a task
+router.patch(async (req, res) => {
+  let id = req.params.id;
+  let uid = req.body.uid;
+  let isChecked = req.body.checked;
+  let taskRef = db.collection("users").doc(uid).collection("tasks").doc(id);
+  await taskRef.update({
+    checked: isChecked
+  })
+    .then(() => {
+      res.status(201).send("Task checked!");
+    })
+    .catch((error) => {
+      // The document probably doesn't exist.
+      res.status(400).send(error.message);
+    });
+})
+
+// Deletes a task
+router.delete(async (req, res) => {
+  // Deletes a task
+  let id = req.params.id;
+  let uid = req.body.uid;
+  db.collection("users").doc(uid).collection("tasks").doc(id).delete().then(() => {
+    res.status(201).send("Document successfully deleted!");
+  }).catch((error) => {
+    res.status(400).send(error.message);
   });
+});
 
 module.exports = router;

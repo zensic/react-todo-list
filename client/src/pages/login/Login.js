@@ -1,13 +1,13 @@
 import React, { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { AuthContext } from "../layout/Layout";
+import { UserContext } from "../layout/Layout";
 import { handleConfirm, handleRegister } from './LoginScripts';
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const authObj = useContext(AuthContext);
+  const {user, setUser} = useContext(UserContext);
   const navigate = useNavigate();
 
   return (
@@ -18,8 +18,8 @@ const Login = () => {
       <input type="email" onChange={(e) => setEmail(e.target.value)}></input>
       <p>Password</p>
       <input type="password" onChange={(e) => setPassword(e.target.value)}></input>
-      <button className='button-primary' onClick={async () => await handleConfirm(email, password, authObj, navigate)}>Confirm</button>
-      <button className='button-secondary' onClick={async () => await handleRegister(email, password, authObj, navigate)}>Register</button>
+      <button className='button-primary' onClick={async () => await handleConfirm(email, password, setUser, navigate)}>Confirm</button>
+      <button className='button-secondary' onClick={async () => await handleRegister(email, password, setUser, navigate)}>Register</button>
     </div>
   )
 }

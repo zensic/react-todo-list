@@ -1,33 +1,41 @@
-import { signIn, signUp } from "../../api/users";
+import axios from "axios";
 
-const handleConfirm = async (email, password, authObj, navigate) => {
+const url = "http://localhost:3001/users/";
+
+const handleConfirm = async (email, password, setUser, navigate) => {
   // user has uid, email
-  let user = await signIn(email, password);
-
-  if (user) {
-    authObj.setAuth(true);
-    authObj.setUser(user);
-    navigate("/dashboard");
-  }
-  else {
-    alert("Invalid password or username!");
-  }
+  await axios.post(`${url}login`, {
+    email: email,
+    password: password
+  })
+    .then((result) => {
+      setUser(result.data);
+      sessionStorage.setItem("uid", result.data.uid);
+      
+      navigate("/dashboard");
+    })
+    .catch((error) => {
+      console.log(error);
+      alert("Invalid password or username!");
+    })
 }
 
-const handleRegister = async (email, password, authObj, navigate) => {
+const handleRegister = async (email, password, setUser, navigate) => {
   // user has uid, email
-  let user = await signUp(email, password);
+  await axios.post(`${url}create`, {
+    email: email,
+    password: password
+  })
+    .then((result) => {
+      alert("Registered successfully!");
 
-  if (user) {
-    alert("Registered successfully!");
-
-    authObj.setAuth(true);
-    authObj.setUser(user);
-    navigate("/dashboard");
-  }
-  else {
-    alert("User already exists!");
-  }
+      setUser(result.data);
+      navigate("/dashboard");
+    })
+    .catch((error) => {
+      console.log(error);
+      alert("User already exists!");
+    })
 }
 
 export { handleConfirm, handleRegister };
