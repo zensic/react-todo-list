@@ -2,8 +2,8 @@ import axios from "axios";
 
 const url = "http://localhost:3001/users/";
 
+// Login 
 const handleConfirm = async (email, password, navigate) => {
-  // user has uid, email
   await axios.post(`${url}login`, {
     email: email,
     password: password
@@ -19,8 +19,8 @@ const handleConfirm = async (email, password, navigate) => {
     })
 }
 
+// Registration
 const handleRegister = async (email, password, navigate) => {
-  // user has uid, email
   await axios.post(`${url}create`, {
     email: email,
     password: password

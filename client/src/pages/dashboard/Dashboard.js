@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { getDashboardData, handleCreate, handleDelete, handleUpdate, handleCheck } from './DashboardScripts';
 
 const Dashboard = () => {
+  const [search, setSearch] = useState("");
   const [tasks, setTasks] = useState([]);
 
   const reload = () => { getDashboardData(setTasks) };
@@ -10,11 +11,26 @@ const Dashboard = () => {
   return (
     <div className='dashboard'>
       <p>Welcome {sessionStorage.getItem("email")}!</p>
-      <input className='dashboard-search' placeholder='Search for task' />
+      <input className='dashboard-search' placeholder='Search for task' onChange={(event) => {
+        setSearch(event.target.value)
+      }} />
       <h2>Tasks pending</h2>
       <button className='task-create' onClick={() => handleCreate(reload)}>Create a Task</button>
       {tasks
-        .filter(task => !task[1].checked)
+        .filter(task => {
+          if (!task[1].checked) {
+            if (search === "") {
+              return task;
+            }
+            else if (
+              task[1].name
+                .toLowerCase()
+                .includes(search.toLowerCase())
+            ) {
+              return task;
+            }
+          }
+        })
         .map((task) =>
           <div className='task' onClick={() => { handleCheck(task[0], !task[1].checked, reload) }} key={task[0]}>
             <span>{task[1].name}</span>
@@ -23,7 +39,20 @@ const Dashboard = () => {
           </div>)}
       <h2>Tasks completed</h2>
       {tasks
-        .filter(task => task[1].checked)
+        .filter(task => {
+          if (task[1].checked) {
+            if (search === "") {
+              return task;
+            }
+            else if (
+              task[1].name
+                .toLowerCase()
+                .includes(search.toLowerCase())
+            ) {
+              return task;
+            }
+          }
+        })
         .map((task) =>
           <div className='task' onClick={() => { handleCheck(task[0], !task[1].checked, reload) }} key={task[0]}>
             <span>{task[1].name}</span>
