@@ -39,15 +39,15 @@ const handleCreate = async (reload) => {
   }
 }
 
-const handleUpdate = async (tid, name, reload) => {
+const handleUpdate = async (tid, task, reload) => {
   let uid = sessionStorage.getItem("uid");
-  let update = prompt("Enter new task name", name);
+  let update = prompt("Enter new task name", task);
 
   if (update) {
-    await axios.patch(`${url}/update`, {
+    await axios.put(`${url}/update`, {
       uid: uid,
       id: tid,
-      task: name
+      task: update
     })
       .then((result) => {
         console.log(result);
@@ -67,7 +67,7 @@ const handleUpdate = async (tid, name, reload) => {
 const handleCheck = async (tid, isChecked, reload) => {
   let uid = sessionStorage.getItem("uid");
 
-  await axios.patch(`${url}/update`, {
+  await axios.put(`${url}/check`, {
     uid: uid,
     id: tid,
     isChecked: isChecked

@@ -1,14 +1,18 @@
-import React, { createContext, useMemo, useState } from "react";
+import React, { createContext, useEffect, useMemo, useState } from "react";
 import { Link, Outlet, useNavigate } from "react-router-dom";
 import { handleLogout } from "./LayoutScripts";
 
 const UserContext = createContext();
 
 const Layout = () => {
+  const navigate = useNavigate();
+
   const [user, setUser] = useState(null);
   const userProvider = useMemo(() => ({user, setUser}), [user, setUser]);
-
-  const navigate = useNavigate();
+  
+  // useEffect(() => {
+  //   let user 
+  // } , []);
 
   return (
     <div className="layout">

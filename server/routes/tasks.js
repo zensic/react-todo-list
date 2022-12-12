@@ -39,13 +39,16 @@ router.post('/', async (req, res) => {
 })
 
 // Updates a task
-router.patch('/update', async (req, res) => {
+router.put('/update', async (req, res) => {
   let id = req.body.id;
   let uid = req.body.uid;
   let task = req.body.task;
+
+  console.log(`${id} ${uid} ${task}`)
+
   let taskRef = db.collection("users").doc(uid).collection("tasks").doc(id);
   await taskRef.update({
-    task: task
+    name: task
   })
     .then(() => {
       res.status(201).send("Task successfully updated!");
@@ -58,7 +61,7 @@ router.patch('/update', async (req, res) => {
 
 
 // Checks a task
-router.patch('/check', async (req, res) => {
+router.put('/check', async (req, res) => {
   let id = req.body.id;
   let uid = req.body.uid;
   let isChecked = req.body.checked;
