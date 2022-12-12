@@ -39,8 +39,8 @@ const Dashboard = () => {
         .map((task) =>
           <div className='task' onClick={() => { handleCheck(task[0], !task[1].checked, reload) }} key={task[0]}>
             <span>{task[1].name}</span>
-            <button className='task-edit' onClick={() => handleUpdate(task[0], task[1].name, reload)}>Update</button>
-            <button className='task-delete' onClick={() => handleDelete(task[0], reload)}>Delete</button>
+            <button className='task-edit' onClick={(event) => handleUpdate(event, task[0], task[1].name, reload)}>Update</button>
+            <button className='task-delete' onClick={(event) => handleDelete(event, task[0], reload)}>Delete</button>
           </div>)}
       <h2>Tasks completed</h2>
       {tasks
@@ -65,8 +65,8 @@ const Dashboard = () => {
         .map((task) =>
           <div className='task' onClick={() => { handleCheck(task[0], !task[1].checked, reload) }} key={task[0]}>
             <span>{task[1].name}</span>
-            <button className='task-edit' onClick={() => handleUpdate(task[0], task[1].name, reload)}>Update</button>
-            <button className='task-delete' onClick={() => handleDelete(task[0], reload)}>Delete</button>
+            <button className='task-edit' onClick={(event) => handleUpdate(event, task[0], task[1].name, reload)}>Update</button>
+            <button className='task-delete' onClick={(event) => handleDelete(event, task[0], reload)}>Delete</button>
           </div>)}
     </div>
   )

@@ -47,8 +47,28 @@ const handleCreate = async (reload) => {
   }
 }
 
+// Checks a task
+const handleCheck = async (tid, isChecked, reload) => {
+  let uid = sessionStorage.getItem("uid");
+
+  await axios.patch(`${url}/${tid}`, {
+    uid: uid,
+    id: tid,
+    isChecked: isChecked
+  })
+    .then((result) => {
+      // console.log(result);
+      reload();
+    })
+    .catch((error) => {
+      // console.log(error);
+      alert("Oops, something went wrong...")
+    })
+}
+
 // Updates a task
-const handleUpdate = async (tid, task, reload) => {
+const handleUpdate = async (event, tid, task, reload) => {
+  event.stopPropagation();
   let uid = sessionStorage.getItem("uid");
   let update = prompt("Enter new task name", task);
 
@@ -70,27 +90,9 @@ const handleUpdate = async (tid, task, reload) => {
   }
 }
 
-// Checks a task
-const handleCheck = async (tid, isChecked, reload) => {
-  let uid = sessionStorage.getItem("uid");
-
-  await axios.patch(`${url}/${tid}`, {
-    uid: uid,
-    id: tid,
-    isChecked: isChecked
-  })
-    .then((result) => {
-      // console.log(result);
-      reload();
-    })
-    .catch((error) => {
-      // console.log(error);
-      alert("Oops, something went wrong...")
-    })
-}
-
 // Deletes a task
-const handleDelete = async (tid, reload) => {
+const handleDelete = async (event, tid, reload) => {
+  event.stopPropagation();
   let uid = sessionStorage.getItem("uid");
 
   await axios.delete(`${url}/${tid}`, {
