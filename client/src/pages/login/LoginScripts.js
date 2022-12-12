@@ -15,7 +15,7 @@ const handleConfirm = async (email, password, setUser, navigate) => {
       navigate("/dashboard");
     })
     .catch((error) => {
-      console.log(error);
+      // console.log(error);
       alert("Invalid password or username!");
     })
 }
@@ -33,7 +33,7 @@ const handleRegister = async (email, password, setUser, navigate) => {
       navigate("/dashboard");
     })
     .catch((error) => {
-      console.log(error);
+      // console.log(error);
       alert("User already exists!");
     })
 }

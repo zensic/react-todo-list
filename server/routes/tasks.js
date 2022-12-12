@@ -40,9 +40,9 @@ router.post('/', async (req, res) => {
 })
 
 // Updates a task
-router.patch('/update', async (req, res) => {
+router.put('/:id', async (req, res) => {
+  let id = req.params.id;
   let uid = req.body.uid;
-  let id = req.body.id;
   let task = req.body.task;
 
   let taskRef = db.collection("users").doc(uid).collection("tasks").doc(id);
@@ -60,10 +60,12 @@ router.patch('/update', async (req, res) => {
 
 
 // Checks a task
-router.patch('/check', async (req, res) => {
+router.patch('/:id', async (req, res) => {
+  let id = req.params.id;
   let uid = req.body.uid;
-  let id = req.body.id;
-  let isChecked = req.body.checked;
+  let isChecked = req.body.isChecked;
+
+  // console.log(`${id} ${uid} ${isChecked} `)
 
   let taskRef = db.collection("users").doc(uid).collection("tasks").doc(id);
   await taskRef.update({
@@ -79,11 +81,9 @@ router.patch('/check', async (req, res) => {
 })
 
 // Deletes a task
-router.delete('/', async (req, res) => {
-  let uid = req.body.uid;
+router.delete('/:id', async (req, res) => {
   let id = req.body.id;
-
-  console.log(`${uid} ${id}`)
+  let uid = req.body.uid;
 
   let taskRef = db.collection("users").doc(uid).collection("tasks").doc(id);
   await taskRef.delete()
